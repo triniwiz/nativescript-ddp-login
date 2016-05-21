@@ -4,13 +4,13 @@ var jsSHA = require("jssha");
 var slice = [].slice;
 export class DDPLogin {
 
-  private static plaintextToDigest(pass) {
+  private plaintextToDigest(pass) {
     var shaObj = new jsSHA("SHA-256", "TEXT");
     shaObj.update(pass);
     return shaObj.getHash("HEX");
   };
 
-  private static isEmail(addr) {
+  private isEmail(addr) {
     var m, matchEmail;
     if (typeof addr !== 'string') {
       return false;
@@ -20,7 +20,7 @@ export class DDPLogin {
     return m !== null;
   };
 
-  private static attemptLogin(ddp, user, pass, options, cb) {
+  private attemptLogin(ddp, user, pass, options, cb) {
     var digest;
     digest = this.plaintextToDigest(pass);
     return ddp.call('login', [
@@ -76,7 +76,7 @@ export class DDPLogin {
     });
   };
 
-  static loginWithUsername(ddp, username, password, options, cb) {
+  loginWithUsername(ddp, username, password, options, cb) {
 
     if (typeof cb !== 'function') {
       throw new Error('Valid callback must be provided to ddp-login');
@@ -94,7 +94,7 @@ export class DDPLogin {
     return this.attemptLogin(ddp, { username: username }, password, options, cb);
   };
 
-  static loginWithEmail(ddp, email, password, options, cb) {
+  loginWithEmail(ddp, email, password, options, cb) {
     options = options || {};
 
     if (options.plaintext == null) {
@@ -103,7 +103,7 @@ export class DDPLogin {
     return this.attemptLogin(ddp, { email: email }, password, options, cb);
   };
 
-  static loginWithAccount(ddp, account, password, options, cb) {
+  loginWithAccount(ddp, account, password, options, cb) {
     options = options || {};
 
     if (options.plaintext == null) {
@@ -122,7 +122,7 @@ export class DDPLogin {
     }
   };
 
-  static loginWithToken = function (ddp, token, cb) {
+  loginWithToken(ddp, token, cb) {
     return ddp.call('login', [
       {
         resume: token

@@ -1,16 +1,17 @@
 import {Observable} from 'data/observable';
 import DDPClient = require('nativescript-ddp-client');
-var login = require('nativescript-ddp-login').DPPLogin;
+import {DDPLogin} from 'nativescript-ddp-login';
 export class HelloWorldModel extends Observable {
   ddpclient;
+  ddplogin;
   constructor() {
     super();
-
+    this.ddplogin = new DDPLogin();
     this.ddpclient = new DDPClient({
       // All properties optional, defaults shown 
-      host: "192.168.2.5",
-      port: 3000,
-      ssl: false,
+      // host: "localhost",
+      //  port: 3000,
+      //  ssl: false,
       autoReconnect: false,
       autoReconnectTimer: 15000,
       maintainCollections: true,
@@ -20,10 +21,10 @@ export class HelloWorldModel extends Observable {
       // from projects like meteorhacks:cluster 
       // (for load balancing and service discovery) 
       // do not use `path` option when you are using useSockJs 
-      useSockJs: true,
+     // useSockJs: true,
       // Use a full url instead of a set of `host`, `port` and `ssl` 
       // do not set `useSockJs` option if `url` is used 
-      //url: 'wss://example.com/websocket'
+     url: 'ws://localhost:3000/websocket'
     });
 
 
@@ -41,9 +42,15 @@ export class HelloWorldModel extends Observable {
       }
 
       console.log('connected!');
-      
-      login.loginWithUsername(this.ddpclient, 'triniwiz', '1234', { plaintext: true }, (err, user) => {
-        console.dump(user)
+
+
+      this.ddplogin.loginWithUsername(this.ddpclient, 'triniwiz', '1234', { plaintext: true }, (err, user) => {
+
+        this.ddpclient.call('createPost', ['{N} here'], (err, result) => {
+          console.dump(err)
+          console.log(result)
+        })
+
       })
 
 
