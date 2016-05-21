@@ -1,9 +1,9 @@
 export declare class DDPLogin {
-    private plaintextToDigest(pass);
-    private isEmail(addr);
+    private plaintextToDigest(pass:String);
+    private isEmail(addr:String);
     private attemptLogin(ddp, user, pass, options, cb);
-    loginWithUsername(ddp: any, username: any, password: any, options: any, cb: any): any;
-    loginWithEmail(ddp: any, email: any, password: any, options: any, cb: any): any;
-    loginWithAccount(ddp: any, account: any, password: any, options: any, cb: any): any;
-    loginWithToken(ddp: any, token: any, cb: any): any;
+    loginWithUsername(dpp, username: String, password: String, cb: Function): any;
+    loginWithEmail(dpp, email: String, password: String, cb: Function): any;
+    loginWithAccount(dpp, emailOrUsername: String, password: String, cb: Function): any;
+    loginWithToken(ddp: any, token: String, cb: Function): any;
 }

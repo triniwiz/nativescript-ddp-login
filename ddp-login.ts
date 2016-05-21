@@ -31,7 +31,7 @@ export class DDPLogin {
           algorithm: 'sha-256'
         }
       }
-    ], function (err, res) {
+    ], (err, res) => {
       var details, e, srpDigest;
       if (!(err && err.error === 400)) {
         if (err) {
@@ -64,7 +64,7 @@ export class DDPLogin {
             user: user,
             password: pass
           }
-        ], function (err, res) {
+        ], (err, res) => {
           if (err) {
             console.error('Login failed: ', err.message);
           }
@@ -76,7 +76,22 @@ export class DDPLogin {
     });
   };
 
-  loginWithUsername(ddp, username, password, options, cb) {
+
+  loginWithUsername(...args: any[]) {
+    let ddp = args[0];
+    let username = args[1];
+    let password = args[2];
+    let options;
+    let cb;
+    if (typeof args[3] === 'function') {
+      options = {};
+      options['plaintext'] = false;
+      cb = args[3];
+    } else if (typeof args[3] === 'object') {
+      options = args[3];
+      cb = args[4];
+    }
+
 
     if (typeof cb !== 'function') {
       throw new Error('Valid callback must be provided to ddp-login');
@@ -85,33 +100,45 @@ export class DDPLogin {
       return cb(new Error('Invalid DDP parameter'));
     }
 
-    options = options || {};
-
-    if (options.plaintext == null) {
-      options.plaintext = false;
-    }
-
     return this.attemptLogin(ddp, { username: username }, password, options, cb);
   };
 
-  loginWithEmail(ddp, email, password, options, cb) {
-    options = options || {};
-
-    if (options.plaintext == null) {
-      options.plaintext = false;
+  loginWithEmail(...args: any[]) {
+    let ddp = args[0];
+    let email = args[1];
+    let password = args[2];
+    let options;
+    let cb;
+    if (typeof args[3] === 'function') {
+      options = {};
+      options['plaintext'] = false;
+      cb = args[3];
+    } else if (typeof args[3] === 'object') {
+      options = args[3];
+      cb = args[4];
     }
+
     return this.attemptLogin(ddp, { email: email }, password, options, cb);
   };
 
-  loginWithAccount(ddp, account, password, options, cb) {
-    options = options || {};
+  loginWithAccount(...args: any[]) {
 
-    if (options.plaintext == null) {
-      options.plaintext = false;
+    let ddp = args[0];
+    let account = args[1];
+    let password = args[2];
+    let options;
+    let cb;
+    if (typeof args[3] === 'function') {
+      options = {};
+      options['plaintext'] = false;
+      cb = args[3];
+    } else if (typeof args[3] === 'object') {
+      options = args[3];
+      cb = args[4];
     }
 
     if (this.isEmail(account)) {
-      return this.loginWithEmail(ddp, account, password, options, function (err, tok) {
+      return this.loginWithEmail(ddp, account, password, options, (err, tok) => {
         if (!(err && err.error === 400)) {
           return cb(err, tok);
         }
