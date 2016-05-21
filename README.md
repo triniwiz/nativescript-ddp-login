@@ -13,25 +13,25 @@ import {DPPLogin} from 'nativescript-ddp-login';
 var token = null;
 
 // Resume login with valid token from previous login
-login.loginWithToken(ddpClient, token,(err, userInfo)=>{
+DPPLogin.loginWithToken(ddpClient, token,(err, userInfo)=>{
   if (err) throw err;
   token = userInfo.token;
 });
 
 // Login using a username
-login.loginWithUsername(ddpClient, user, pass,(err, userInfo) =>{
+DPPLogin.loginWithUsername(ddpClient, user, pass,(err, userInfo) =>{
   if (err) throw err;
   token = userInfo.token;
 });
 
 // Login using an email address
-login.loginWithEmail(ddpClient, email, pass, (err, userInfo)=>{
+DPPLogin.loginWithEmail(ddpClient, email, pass, (err, userInfo)=>{
   if (err) throw err;
   token = userInfo.token;
 });
 
 // Login using either a username or email address
-login.loginWithAccount(ddpClient, userOrEmail, pass, (err, userInfo)=>{
+DPPLogin.loginWithAccount(ddpClient, userOrEmail, pass, (err, userInfo)=>{
   if (err) throw err;
   token = userInfo.token;
 });
