@@ -1,12 +1,12 @@
 {
   "name": "nativescript-ddp-login",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "NativeScript plugin to enable ddp login",
   "main": "ddp-login.js",
   "nativescript": {
     "platforms": {
-      "android": "1.7.0",
-      "ios": "1.7.0"
+      "android": "1.5.0",
+      "ios": "1.5.0"
     }
   },
   "scripts": {
